@@ -1,0 +1,3 @@
+-unit conversion-
+*convert_units [magnitud][unidad inicial]to[unidad final]
+*convert_units 30 kilojoule to joule

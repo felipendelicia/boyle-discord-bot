@@ -1,0 +1,3 @@
+-roots of a quadratic function-
+*quadratic_function [a][b][c]
+*quadratic_function 1 2 3
