@@ -167,4 +167,4 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="Patricio rey y sus redonditos de ricota"))
     print("The bot has started")
 
-bot.run("ODIyNjE1NDYyNTMzMTM2NDA0.YFU2WQ.tTUq_-QTAAq1UfjD29ua2gmi9qc")
+bot.run(##TOKEN HERE##)
