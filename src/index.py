@@ -1,15 +1,13 @@
-import numbers
-import discord
-from discord.enums import Status
 from discord.ext import commands
-import datetime
+import discord
 import os
 
-from mpmath.functions.functions import arg
-import chemistry_module
-import math_module
-import physics_module
-import others_module
+from config import token
+
+from modules import chemistry_commands
+from modules import math_commands
+from modules import physics_commands
+from modules import others_commands
 
 bot = commands.Bot(command_prefix="*", description="Un bot que te facilita las tareas", help_command=None)
 current_path = os.path.dirname(os.path.abspath(__file__))
@@ -18,7 +16,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 
 @bot.command()
 async def molecular_mass(ctx, formule):
-    await ctx.send(chemistry_module.molecularmass(formule))
+    await ctx.send(chemistry_commands.molecularmass(formule))
 
 @bot.command()
 async def balance_equations(ctx, *args):
@@ -39,17 +37,17 @@ async def balance_equations(ctx, *args):
         one_product = [reaction.split("=")[1]]
         products = one_product
 
-    await ctx.send(chemistry_module.balancereactions(reactives,products))
+    await ctx.send(chemistry_commands.balancereactions(reactives,products))
 
 @bot.command()
 async def quadratic_function(ctx, a, b=0, c=0):
-        await ctx.send(math_module.quadratic_function(a,b,c))
+        await ctx.send(math_commands.quadratic_function(a,b,c))
         await ctx.send(file=discord.File(f'{current_path}\output.png'))
         os.remove(f'{current_path}\output.png')
 
 @bot.command()
 async def convert_units(ctx, *args):
-    await ctx.send(others_module.convert_units(list(args)))
+    await ctx.send(others_commands.convert_units(list(args)))
 
 @bot.command()
 async def concentration(ctx, *args): 
@@ -94,25 +92,21 @@ async def concentration(ctx, *args):
 
     print(arguments_dictionary)
 
-    call_to_the_function = chemistry_module.concentration(arguments_dictionary)
+    call_to_the_function = chemistry_commands.concentration(arguments_dictionary)
 
     for i in call_to_the_function:
         await ctx.send(i)
 
 @bot.command()
 async def trition(ctx, cpattern, vpattern, vsample, nOH, nH, baseacid):
-    await ctx.send(chemistry_module.trition(cpattern,vpattern,vsample,nOH,nH,baseacid))
+    await ctx.send(chemistry_commands.trition(cpattern,vpattern,vsample,nOH,nH,baseacid))
 
 @bot.command()
 async def help(ctx):
     await ctx.send("""Boyle: Un bot que te facilita las tareas:
-    Está en desarrollo, si encontras un bug podes informarme en delicia4581@gmail.com
-    Sistema de unidades: https://github.com/hgrecco/pint/blob/master/pint/default_en.txt
-    Mi GitHub: https://github.com/1felipo""")
-    await ctx.send(file=discord.File(current_path + "\chemistry_commands.txt"))
-    await ctx.send(file=discord.File(current_path + "\math_commands.txt"))
-    await ctx.send(file=discord.File(current_path + "\physics_commands.txt"))
-    await ctx.send(file=discord.File(current_path + "\other_commands.txt"))
+    Repo: https://github.com/felipendelicia/boyle-discord-bot"""
+    )
+    await ctx.send(file=discord.File(current_path + "\help\helpFile.md"))
 
 @bot.command()
 async def ideal_gases(ctx, *args):
@@ -156,7 +150,7 @@ async def ideal_gases(ctx, *args):
     print(params_dic)
     print(out_unit)
 
-    output = physics_module.ideal_gases(params_dic,out_unit)
+    output = physics_commands.ideal_gases(params_dic,out_unit)
 
     await ctx.send(output)
 
@@ -165,6 +159,6 @@ async def ideal_gases(ctx, *args):
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="Patricio rey y sus redonditos de ricota"))
-    print("The bot has started")
+    print("[BOYLE]: bot has started")
 
-bot.run(##TOKEN HERE##)
+bot.run(token.token)
