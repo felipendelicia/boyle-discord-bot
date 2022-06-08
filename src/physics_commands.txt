@@ -1,3 +1,0 @@
--using the ideal gas equation of state-
-*ideal_gases parameters{[temperature][mol][pressure][volume]} [output unit]
-*ideal_gases v=22.4L, t=273.15K, n=1mol, to torr
